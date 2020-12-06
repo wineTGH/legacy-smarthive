@@ -3,6 +3,7 @@
     include "db.php";
 
     $data = $_POST;
+    echo var_dump($data);
 
     $data = json_decode($data, true);
 
