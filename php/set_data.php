@@ -3,20 +3,20 @@
     include "db.php";
 
     $data = $_POST;
-    echo var_dump($data);
 
-    $data = json_decode($data, true);
+    $user = R::findOne('users', 'hiveid=?', array($data['hiveid']));
 
-    $user = R::dispense('users');
-    
     if ( isset($data)) {
         if ($data['hiveid'] == $user['hiveid']){
-            $buffer = R::dispense($user['id']);
+            // $buffer = R::findOne($user -> id, ' hiveid = ? ORDER BY id DESC', [$user -> hiveid]);
 
-            $buffer['hiveid'] = $data['hiveid'];
-            $buffer['data'] = $data['data'];
-            R::store($buffer);
+            // $buffer -> hiveid = $data['hiveid'];
+            // $buffer -> data = $data['data'];
+            // R::store($buffer);
+
+            echo "success!";
+
         }
-    }
 
+    }
 ?>

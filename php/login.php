@@ -17,7 +17,7 @@
 
         if($user){
             if(password_verify($data['pass'], $user['pass'])){
-                $_SESSION['logged_user'] = $user;
+                $_SESSION['logged_user'] = $user; // Создаём сессию с этим пользователем
                 header('location: /');
                 echo '<div style="color: green;">Успешно</div>';
             } else {
