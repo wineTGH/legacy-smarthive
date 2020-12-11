@@ -1,4 +1,4 @@
-const ADDRES = 'http://localhost/hive/get_data.php'
+const ADDRES = window.location.href + 'hive/get_data.php';
 
 // Vertical bar chart
 var ctx = document.getElementById('myChart').getContext('2d');
@@ -17,8 +17,9 @@ var myChart = new Chart(ctx, {
 setInterval(getData, 60000);
 
 async function getData() {
-      let response = await fetch(ADDRES);
-      let content = await response.json();
+    console.log(window.location.href);
+    let response = await fetch(ADDRES);
+    let content = await response.json();
 
-      document.getElementById("ajax_data").innerHTML = content.data;
+    document.getElementById("ajax_data").innerHTML = content.data;
  }
