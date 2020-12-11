@@ -21,7 +21,7 @@
 
     <body>
 
-        <?php echo 'Добро пожаловать, '.$user -> login.'! '; ?> <a href="/php/logout.php">Выйти</a> <br>
+        <?php echo 'Добро пожаловать, '.$user -> login.'! '; ?> <a href="/auth/logout.php">Выйти</a> <br>
 
         <div class="container">
             <canvas id="myChart" width="1280px" height="400px"></canvas>

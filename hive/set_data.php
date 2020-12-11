@@ -1,7 +1,5 @@
 <?php
-
     define('ROOT', str_replace('\\', '/', $_SERVER['DOCUMENT_ROOT']) .'/');
-
     include ROOT.'/libs/db.php';
 
     $data = $_GET;
@@ -10,15 +8,14 @@
 
     if ( isset($data)) {
         if ($data['hiveid'] == $user['hiveid']){
-            $buffer = R::findOne($user -> id, ' hiveid = ? ORDER BY id DESC', [$user -> hiveid]);
+            $buffer = R::dispense($user['id']);
 
-            $buffer -> hiveid = $data['hiveid'];
-            $buffer -> data = $data['data'];
+            $buffer['hiveid'] = $data['hiveid'];
+            $buffer['data']   = $data['data'];
             R::store($buffer);
 
             echo "success!";
 
         }
-
     }
 ?>
