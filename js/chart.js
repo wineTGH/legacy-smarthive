@@ -1,4 +1,4 @@
-const ADDRES = 'http://localhost/php/get_data.php'
+const ADDRES = 'http://localhost/hive/get_data.php'
 
 // Vertical bar chart
 var ctx = document.getElementById('myChart').getContext('2d');
