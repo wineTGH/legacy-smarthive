@@ -1,6 +1,8 @@
 <?php
 
-    include "db.php";
+    define('ROOT', str_replace('\\', '/', $_SERVER['DOCUMENT_ROOT']) .'/');
+
+    include ROOT.'/libs/db.php';
 
     $data = $_POST;
 

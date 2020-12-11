@@ -1,6 +1,8 @@
 <?php
 
-    include 'php/db.php';
+    define('ROOT', str_replace('\\', '/', $_SERVER['DOCUMENT_ROOT']) .'/');
+
+    include ROOT.'/libs/db.php';
 
     $user = $_SESSION['logged_user'];
 ?>
@@ -15,14 +17,14 @@
 
         <title>Панель управления</title>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
-
     </head>
+
     <body>
 
         <?php echo 'Добро пожаловать, '.$user -> login.'! '; ?> <a href="/php/logout.php">Выйти</a> <br>
 
         <div class="container">
-            <canvas id="myChart" width="600px" height="400px"></canvas>
+            <canvas id="myChart" width="1280px" height="400px"></canvas>
         </div>
 
         <script src="js/chart.js"></script>
@@ -38,8 +40,8 @@
         <title>Добро пожаловать!</title>
     </head>
     <body>
-        <a href="php/login.php">Вход</a><br>
-        <a href="php/reg.php">Регистрация</a>
+        <a href="auth/login.php">Вход</a><br>
+        <a href="auth/reg.php">Регистрация</a>
     </body>
 
 </html>
