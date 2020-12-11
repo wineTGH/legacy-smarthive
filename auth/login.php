@@ -20,7 +20,7 @@
         if($user){
             if(password_verify($data['pass'], $user['pass'])){
                 $_SESSION['logged_user'] = $user; // Создаём сессию с этим пользователем
-                header('location: '. ROOT);
+                header('location: /');
                 echo '<div style="color: green;">Успешно</div>';
             } else {
                 $errors[] = 'Неверный пароль!';
@@ -44,7 +44,7 @@
     <title>Вход</title>
 </head>
 <body>
-    <form action="/php/login.php" method="post">
+    <form action="/auth/login.php" method="post">
         <input name="login" type="text" placeholder="логин" value=<?php echo $data['login']; ?>> <br>
         <input name="pass" type="password" placeholder="пароль" value=<?php echo $data['pass']; ?>><br>
         <button name="do_login" type="submit">Вход</button>

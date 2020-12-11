@@ -37,19 +37,19 @@
     if (empty($errors)){
 
         $user = R::dispense('users');
-        $user -> login = $data['login'];
-        $user -> email = $data['email'];
-        $user -> hiveid = (string)$data['bee_id'];
+        $user -> login  = $data['login'];
+        $user -> email  = $data['email'];
+        $user -> hiveid = $data['bee_id'];
         $user -> pass = password_hash($data['pass'], PASSWORD_DEFAULT);
         R::store($user);
         
         $hive = R::dispense($user -> id);
-        $hive -> hiveid = (string)$user -> hiveid;
+        $hive -> hiveid = $user -> hiveid;
         R::store($hive);
 
         $_SESSION['logged_user'] = $user;
 
-        header('location: '. ROOT);
+        header('location: /');
         echo '<div style="color: green;">Успешно</div>';
 
     } else {
@@ -66,7 +66,7 @@
     <title>Регистрация</title>
 </head>
 <body>
-    <form action="/php/reg.php" method="post">
+    <form action="/auth/reg.php" method="post">
         <input name="login" type="text" placeholder="логин" value=<?php echo @$data['login'] ?>><br>
         <input name="email" type="email" placeholder="почта" value=<?php echo @$data['email'] ?>><br>
         <input name="pass" type="password" placeholder="пароль" value=<?php echo @$data['pass'] ?>><br>
