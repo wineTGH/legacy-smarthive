@@ -21,5 +21,5 @@ async function getData() {
     let response = await fetch(ADDRES);
     let content = await response.json();
 
-    document.getElementById("ajax_data").innerHTML = content.data;
+    document.getElementById("temp").innerHTML = content.data;
  }

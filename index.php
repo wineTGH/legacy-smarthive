@@ -30,8 +30,8 @@
         <script src="js/chart.js"></script>
 
         <br>
+        <p id="temp">0</p> <p id="hum">0</p> <p id="bat">100</p> <br>
         <button onclick="getData()">Обновить</button>
-        <p id="ajax_data"></p><br>
     
     </body>
 </html>
