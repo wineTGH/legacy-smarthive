@@ -40,6 +40,7 @@
         $user -> login  = $data['login'];
         $user -> email  = $data['email'];
         $user -> hiveid = $data['bee_id'];
+        $user -> hive_count = 1;
         $user -> pass = password_hash($data['pass'], PASSWORD_DEFAULT);
         R::store($user);
         
