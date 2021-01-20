@@ -5,6 +5,17 @@
     include ROOT.'/libs/db.php';
 
     $user = $_SESSION['logged_user'];
+    $hive_count = (int)$user["hivecount"];
+    $data = $_GET;
+    $i = 1;
+    $active = 0;
+
+    if (isset($data["active"])) {
+        $active = (int) $data["active"];
+    } else {
+        $active = 0;
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -49,11 +60,15 @@
                     <!-- <img src="img/bee.svg" alt="" class="img-fluid"> -->
                 </a>
                 <div class="list-group list-group-flush">
-                <a href="#" class="list-group-item active">Общее</a>
-                <a href="#" class="list-group-item">Улей 1</a>
-                <a href="#" class="list-group-item">Улей 2</a>
-                <a href="#" class="list-group-item">Улей 3</a>
-                <a href="#" class="list-group-item">Улей 4</a>
+                <?php
+                if ($active == 0) {echo "<a href=\"?active=0\" class=\"list-group-item active\">Общее</a>";} else {echo "<a href=\"?active=0\" class=\"list-group-item\">Общее</a>";}
+                while ($i <= $hive_count + 1) {
+
+                    echo "<a href=\"?active={$i}\" class=\"list-group-item { if($i == ) }\">Улей 1</a>";
+
+                    $i++;
+                }
+                ?>
                 </div>
             </div>
             </header>
