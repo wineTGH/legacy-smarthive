@@ -63,6 +63,7 @@ async function get_data() {
     let content = await response.json();
  }
 
+// Тестовая функция
 setInterval(change_temp, 1000);
 let i = 15;
 function change_temp() {
