@@ -45,7 +45,12 @@
         R::store($user);
         
         $hive = R::dispense($user -> id);
+        $hive -> hivecount = 1;
         $hive -> hiveid = $user -> hiveid;
+        $hive -> temp1 = 0;
+        $hive -> hum1 = 0;
+        $hive -> weigth1 = 0;
+        $hive -> energy1 = 0;
         R::store($hive);
 
         $_SESSION['logged_user'] = $user;

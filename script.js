@@ -64,10 +64,10 @@ async function get_data() {
  }
 
 // Тестовая функция
-setInterval(change_temp, 1000);
+// setInterval(change_temp, 1000);
 let i = 15;
 function change_temp() {
-    tempProgress.style = 'width:' + String(i++) + '%;';
+    tempProgress.style = 'width:' + String(i) + '%;';
     document.getElementById('tempProgress').innerHTML = i;
 }
 
