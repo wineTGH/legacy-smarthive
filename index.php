@@ -10,6 +10,8 @@
     $i = 1;
     $active = 0;
 
+    // echo var_dump($user);
+
     if (isset($data["active"])) {
         $active = (int) $data["active"];
     } else {
@@ -61,11 +63,19 @@
                 </a>
                 <div class="list-group list-group-flush">
                 <?php
-                if ($active == 0) {echo "<a href=\"?active=0\" class=\"list-group-item active\">Общее</a>";} else {echo "<a href=\"?active=0\" class=\"list-group-item\">Общее</a>";}
-                while ($i <= $hive_count + 1) {
 
-                    echo "<a href=\"?active={$i}\" class=\"list-group-item { if($i == ) }\">Улей 1</a>";
+                if ($active == 0) {
+                    echo "<a href=\"?active=0\" class=\"list-group-item active\">Общее</a>";
+                } else {
+                    echo "<a href=\"?active=0\" class=\"list-group-item\">Общее</a>";
+                }
 
+                while ($i <= $hive_count) {
+                    if ($active == $i) {
+                    echo "<a href=\"?active={$i}\" class=\"list-group-item active\">Улей {$i}</a>";
+                    } else {
+                    echo "<a href=\"?active={$i}\" class=\"list-group-item\">Улей {$i}</a>";
+                    }
                     $i++;
                 }
                 ?>
