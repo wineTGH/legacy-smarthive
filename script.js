@@ -1,6 +1,9 @@
+const ADDRES = window.location.href + 'hive/get_data.php';
+const tempProgress = document.querySelector('#tempProgress');
+
 // Данные графика температуры
-var temp = document.getElementById('tempChart').getContext('2d');
-var tempChart = new Chart(temp, {
+let temp = document.getElementById('tempChart').getContext('2d');
+let tempChart = new Chart(temp, {
     type: 'line',
 
     data: {
@@ -26,8 +29,8 @@ options: {
 });
 
 // Данные графика влажности
-var hum = document.getElementById('humChart').getContext('2d');
-var humChart = new Chart(hum, {
+let hum = document.getElementById('humChart').getContext('2d');
+let humChart = new Chart(hum, {
     type: 'line',
 
     data: {
@@ -52,12 +55,24 @@ var humChart = new Chart(hum, {
     }
 });
 
-const ADDRES = window.location.href + 'hive/get_data.php';
+setInterval(get_data, 60000);
 
-setInterval(getData, 60000);
-
-async function getData() {
+async function get_data() {
     console.log(window.location.href);
     let response = await fetch(ADDRES);
     let content = await response.json();
  }
+
+setInterval(change_temp, 1000);
+let i = 15;
+function change_temp() {
+    tempProgress.style = 'width:' + String(i++) + '%;';
+    document.getElementById('tempProgress').innerHTML = i;
+}
+
+function log_out() {
+    let con = confirm('Вы уверенны, что хотите выйти?');
+    if (con) {
+        window.location.href = '/auth/logout.php';
+    }
+}

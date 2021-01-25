@@ -49,7 +49,7 @@
                     <li class="nav-item">
                         <a href="#" class="nav-link">Настройки</a>
                     </li>
-                    <button class="btn btn-danger" onclick="window.location.href = '/auth/logout.php';">Выход</button>
+                    <button class="btn btn-danger" onclick="log_out()">Выход</button>
                     </ul>
                 </div>
                 </div>
@@ -92,19 +92,19 @@
                     <div class="card-body">
                         <p class="m-0">Температура</p>
                         <div class="progress m-2">
-                        <div class="progress-bar m" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                        <div class="progress-bar" id="tempProgress" role="progressbar" style="width: 80%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">80%</div>
                         </div>
                         <p class="m-0">Влажность</p>
                         <div class="progress m-2">
-                        <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                        <div class="progress-bar" id="humProgress" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
                         </div>
                         <p class="m-0">Вес</p>
                         <div class="progress m-2">
-                        <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                        <div class="progress-bar" id="weightProgress" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
                         </div>
                         <p class="m-0">Заряд аккумулятора</p>
                         <div class="progress m-2">
-                        <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                        <div class="progress-bar" id="procProgress" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
                         </div>
                     </div>
                     </div>
