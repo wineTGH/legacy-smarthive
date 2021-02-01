@@ -1,5 +1,17 @@
-const ADDRES = window.location.href + 'hive/get_data.php';
+let ADDRES = window.location.href + 'hive/get_data.php';
 const tempProgress = document.querySelector('#tempProgress');
+
+// возвращает все GET параметры ввиде массива
+function get_param() {
+    var a = window.location.search;
+    var b = new Object();
+    a = a.substring(1).split("&");
+    for (var i = 0; i < a.length; i++) {
+  	c = a[i].split("=");
+        b[c[0]] = c[1];
+    }
+    return b;
+};
 
 // Данные графика температуры
 let temp = document.getElementById('tempChart').getContext('2d');
@@ -55,12 +67,19 @@ let humChart = new Chart(hum, {
     }
 });
 
-setInterval(get_data, 60000);
+setInterval(get_data, 1000);
 
 async function get_data() {
-    console.log(window.location.href);
+    let get = get_param();
+    if (get || get["active"] != "0") {
+        ADDRES += "?active=" + get["active"];
+    } else {
+        ADDRES += "?active=0"
+    }
     let response = await fetch(ADDRES);
     let content = await response.json();
+
+    console.log(content);
  }
 
 // Тестовая функция
