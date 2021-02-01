@@ -11,6 +11,8 @@
 
     $hive_count = $hive["hivecount"];
 
+    $i = 0;
+
     if ($hive) {
         $arr = array(
             "status" => "success",
