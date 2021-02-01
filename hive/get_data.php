@@ -7,12 +7,27 @@
 
     $hive = R::findOne($user -> id, ' hiveid = ? ORDER BY id DESC', [$user -> hiveid]);
 
+    $i = 0;
+
     if ($hive) {
         $arr = array(
-            'data' => $hive -> data
-        ); 
+            "status" => "success",
+        );
+
+        while ($i <= $hive_count) {
+            $arr["temp{$i}"] = $hive["temp{$i}"];
+            $arr["hum{$i}"] = $hive["hum{$i}"];
+            $arr["weight{$i}"] = $hive["weight{$i}"];
+            $arr["energy{$i}"] = $hive["energy{$i}"];
+            $i++;
+        }
     
-        echo json_encode($arr);
-        exit;
+
+    } else {
+        $arr = array (
+            "status" => "error! Hive not found!"
+        );
     }
+    echo json_encode($arr);
+    exit;
 ?>

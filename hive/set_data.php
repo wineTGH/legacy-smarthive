@@ -15,8 +15,6 @@
 
     $hive_count = (int) $data['hive_count'];
 
-    echo var_dump($data);
-
     if ( isset($data)) {
         if ($data['hiveid'] == $user['hiveid']) {
 
