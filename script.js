@@ -1,4 +1,4 @@
-let ADDRES = window.location.href + 'hive/get_data.php';
+let ADDRES = 'hive/get_data.php';
 const tempProgress = document.querySelector('#tempProgress');
 
 // возвращает все GET параметры ввиде массива
@@ -71,15 +71,16 @@ setInterval(get_data, 1000);
 
 async function get_data() {
     let get = get_param();
-    if (get || get["active"] != "0") {
+    if (get["active"] != "0") {
         ADDRES += "?active=" + get["active"];
     } else {
         ADDRES += "?active=0"
     }
     let response = await fetch(ADDRES);
     let content = await response.json();
-
     console.log(content);
+    ADDRES = '/hive/get_data.php';
+    
  }
 
 // Тестовая функция

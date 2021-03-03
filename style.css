@@ -19,7 +19,7 @@
     }
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1119px) {
     .sidebar-fixed {
         display: none;
     }
