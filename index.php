@@ -102,19 +102,19 @@
                     <div class="card-body">
                         <p class="m-0">Температура</p>
                         <div class="progress m-2">
-                        <div class="progress-bar" id="tempProgress" role="progressbar" style="width: 80%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">80%</div>
+                        <div class="progress-bar" id="tempProgress" role="progressbar" style="width: 0%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                         <p class="m-0">Влажность</p>
                         <div class="progress m-2">
-                        <div class="progress-bar" id="humProgress" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                        <div class="progress-bar" id="humProgress" role="progressbar" style="width: 0%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                         <p class="m-0">Вес</p>
                         <div class="progress m-2">
-                        <div class="progress-bar" id="weigthProgress" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                        <div class="progress-bar" id="weightProgress" role="progressbar" style="width: 0%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                         <p class="m-0">Заряд аккумулятора</p>
                         <div class="progress m-2">
-                        <div class="progress-bar" id="procProgress" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                        <div class="progress-bar" id="energyProgress" role="progressbar" style="width: 0%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
                     </div>
