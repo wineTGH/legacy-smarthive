@@ -1,17 +1,10 @@
 let ADDRES = 'hive/get_data.php';
 const tempProgress = document.querySelector('#tempProgress');
+const humProgress = document.querySelector('#humProgress');
+const weightProgress = document.querySelector('#weightProgress');
+const energyProgress = document.querySelector('#energyProgress');
 
-// возвращает все GET параметры ввиде массива
-function get_param() {
-    var a = window.location.search;
-    var b = new Object();
-    a = a.substring(1).split("&");
-    for (var i = 0; i < a.length; i++) {
-  	c = a[i].split("=");
-        b[c[0]] = c[1];
-    }
-    return b;
-};
+
 
 // Данные графика температуры
 let temp = document.getElementById('tempChart').getContext('2d');
@@ -69,26 +62,60 @@ let humChart = new Chart(hum, {
 
 setInterval(get_data, 1000);
 
-async function get_data() {
-    let get = get_param();
-    if (get["active"] != "0") {
-        ADDRES += "?active=" + get["active"];
-    } else {
-        ADDRES += "?active=0"
+// возвращает все GET параметры ввиде массива
+function get_param() {
+    var a = window.location.search;
+    var b = new Object();
+    a = a.substring(1).split("&");
+    for (var i = 0; i < a.length; i++) {
+  	c = a[i].split("=");
+        b[c[0]] = c[1];
     }
+    return b;
+};
+
+async function get_data() {
+    
+    ADDRES = '/hive/get_data.php';
+    
+    let get = get_param();
+    let active = get["active"];
+    
+    if (active && active != "0") {
+        ADDRES += "?active=" + active;
+    } else {
+        ADDRES += "?active=0";
+        active = "0";
+    }
+
     let response = await fetch(ADDRES);
     let content = await response.json();
-    console.log(content);
-    ADDRES = '/hive/get_data.php';
+    
+    console.log(ADDRES);
+    
+    if (content.status == 0) {
+        change_values(content['temp' + active], content['hum' + active], content['weight' + active], content['energy' + active]);
+    }
     
  }
 
 // Тестовая функция
 // setInterval(change_temp, 1000);
 let i = 15;
-function change_temp() {
-    tempProgress.style = 'width:' + String(i) + '%;';
-    document.getElementById('tempProgress').innerHTML = i;
+function change_values(temperature, humidity, weight, energy) {
+    console.log(temperature, humidity, weight, energy);
+
+    tempProgress.style = 'width:' + String(temperature) + '%;';
+    document.getElementById('tempProgress').innerHTML = temperature;
+
+    humProgress.style = 'width:' + String(humidity) + '%;';
+    document.getElementById('humProgress').innerHTML = humidity;
+
+    weightProgress.style = 'width:' + String(weight) + '%;';
+    document.getElementById('weightProgress').innerHTML = weight;
+
+    energyProgress.style = 'width:' + String(energy) + '%;';
+    document.getElementById('energyProgress').innerHTML = energy;
 }
 
 function log_out() {
