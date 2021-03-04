@@ -20,10 +20,7 @@
         if ($user_hive != $hive_count) {
             $buffer = R::load('users', (int)$user["id"]);
             $buffer -> hivecount = $hive_count;
-<<<<<<< HEAD
             $user['hivecount'] = $hive_count;
-=======
->>>>>>> aff2115e8319cac6cdfb898961ae753bc4d8aea0
             R::store($buffer);
         }
 
