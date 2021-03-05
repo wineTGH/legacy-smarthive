@@ -41,6 +41,7 @@
         $result    = json_decode($result, true);
         
         if(isset($result)) {
+            //TODO Время уходит в минус, если на часах 23:00
             $unix_time = $result["unixtime"];
             $hours     = (string) ((int) date("G", $unix_time) - 1);
             $date      = $hours.date(":i", $unix_time); 
