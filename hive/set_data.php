@@ -6,11 +6,11 @@
     define('ROOT', str_replace('\\', '/', $_SERVER['DOCUMENT_ROOT']) .'/');
     include ROOT.'/libs/db.php';
 
-    $data       = $_GET;
-    $i          = 1;
-    $user       = R::findOne('users', 'hiveid=?', array($data['hiveid']));
-    $buffer     = 0;
-    $hive_count = (int) $data['hivecount'];
+    $data          = $_GET;
+    $i             = 1;
+    $user          = R::findOne('users', 'hiveid=?', array($data['hiveid']));
+    $buffer        = 0;
+    $hive_count    = (int) $data['hivecount'];
 
     if ( isset($data)) {
         if ($data['hiveid'] == $user['hiveid']) {
@@ -23,13 +23,28 @@
                 $buffer["hum{$i}"]    = $data["hum{$i}"];
                 $buffer["weight{$i}"] = $data["weight{$i}"];
                 $buffer["energy{$i}"] = $data["energy{$i}"];
-                $buffer["hivecount"]  = $data["hivecount"];
-                $buffer['swarming']   = $data['swarming'];
-                $buffer['time']       = date("H:i");
                 $i++;
             }
+                
+                $buffer["hivecount"]  = $data["hivecount"];
+                $buffer['swarming']   = $data['swarming'];
+                $buffer['time']       = get_user_time($user['timezone']);
+
                 R::store($buffer);
-                echo "success!";
+                echo var_dump($buffer);
+        }
+    }
+
+    function get_user_time($user_timezone):string {
+        $url       = "http://worldtimeapi.org/api/timezone/".$user_timezone;
+        $result    = file_get_contents ($url);
+        $result    = json_decode($result, true);
+        
+        if(isset($result)) {
+            $unix_time = $result["unixtime"];
+            $hours     = (string) ((int) date("G", $unix_time) - 1);
+            $date      = $hours.date(":i", $unix_time); 
+            return $date;
         }
     }
 ?>
