@@ -28,7 +28,8 @@
             "status" => "0",
         );
         $active = (int)$data['active'];
-
+        $arr['time'] = $hive['time'];
+        
         if ($active == 0) {
             
             while ($i <= $hive_count) {

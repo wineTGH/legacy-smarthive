@@ -4,17 +4,17 @@ const humProgress = document.querySelector('#humProgress');
 const weightProgress = document.querySelector('#weightProgress');
 const energyProgress = document.querySelector('#energyProgress');
 
-
+let old_time = "12:00";
 
 // Данные графика температуры
 let temp = document.getElementById('tempChart').getContext('2d');
-let tempChart = new Chart(temp, {
+let temp_config = {
     type: 'line',
 
     data: {
-     labels: ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00'],
+     //labels: ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00'],
      datasets: [{
-         data: [26, 24, 27, 30, 26, 23, 25],
+         //data: [26, 24, 27, 30, 26, 23, 25],
          backgroundColor: 'rgba(255, 0, 0, 0.2)'
     }]
 },
@@ -31,17 +31,18 @@ options: {
     }
 }
 
-});
+};
+let tempChart = new Chart(temp, temp_config);
 
 // Данные графика влажности
 let hum = document.getElementById('humChart').getContext('2d');
-let humChart = new Chart(hum, {
+let hum_config =  {
     type: 'line',
 
     data: {
-     labels: ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00'],
+     //labels: ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00'],
      datasets: [{
-         data: [12, 19, 3, 5, 2, 3, 7],
+         //data: [12, 19, 3, 5, 2, 3, 7],
          backgroundColor: 'rgba(0, 0, 255, 0.2)'
          
     }]
@@ -58,7 +59,8 @@ let humChart = new Chart(hum, {
             fontStyle: "bold"
         }
     }
-});
+};
+let humChart = new Chart(hum, hum_config);
 
 setInterval(get_data, 1000);
 
@@ -91,18 +93,16 @@ async function get_data() {
     let response = await fetch(ADDRES);
     let content = await response.json();
     
-    console.log(ADDRES);
+    console.log(content);
     
     if (content.status == 0) {
-        change_values(content['temp' + active], content['hum' + active], content['weight' + active], content['energy' + active]);
+        change_values(content['temp' + active], content['hum' + active], content['weight' + active], content['energy' + active], content['time']);
     }
     
  }
 
-// Тестовая функция
-// setInterval(change_temp, 1000);
-let i = 15;
-function change_values(temperature, humidity, weight, energy) {
+
+function change_values(temperature, humidity, weight, energy, time) {
     console.log(temperature, humidity, weight, energy);
 
     tempProgress.style = 'width:' + String(temperature) + '%;';
@@ -116,6 +116,18 @@ function change_values(temperature, humidity, weight, energy) {
 
     energyProgress.style = 'width:' + String(energy) + '%;';
     document.getElementById('energyProgress').innerHTML = energy;
+
+    if (time != old_time) {
+        hum_config.data.labels.push(time);
+        hum_config.data.datasets.forEach(function(dataset) { dataset.data.push(humidity); });
+        humChart.update();
+
+        temp_config.data.labels.push(time);
+        temp_config.data.datasets.forEach(function(dataset) { dataset.data.push(temperature); });
+        tempChart.update();
+
+        old_time = time;
+    }
 }
 
 function log_out() {
