@@ -39,14 +39,16 @@
         $user = R::dispense('users');
         $user -> login  = $data['login'];
         $user -> email  = $data['email'];
+        $user -> timezone = get_timezone();
         $user -> hiveid = $data['bee_id'];
         $user -> hivecount = 1;
         $user -> pass = password_hash($data['pass'], PASSWORD_DEFAULT);
         R::store($user);
         
         $hive = R::dispense($user -> id);
-        $hive -> hivecount = 1;
         $hive -> hiveid = $user -> hiveid;
+        $hive -> hivecount = 1;
+        $hive -> swarming = 0;
         $hive -> temp1 = 0;
         $hive -> hum1 = 0;
         $hive -> weight1 = 0;
@@ -62,6 +64,14 @@
         echo '<div style="color: red;">'.array_shift($errors).'</div>'; //! Вывод ошибки
     }
 }
+
+function get_timezone():string {
+    $url = 'http://worldtimeapi.org/api/ip';
+    $result = file_get_contents ($url);
+    $result = json_decode($result, true);
+    return $result['timezone'];
+}
+
 ?>
 
 <!DOCTYPE html>
