@@ -93,7 +93,7 @@ async function get_data() {
     let response = await fetch(ADDRES);
     let content = await response.json();
     
-    console.log(content);
+    //console.log(content);
     
     if (content.status == 0) {
         change_values(content['temp' + active], content['hum' + active], content['weight' + active], content['energy' + active], content['time']);
@@ -103,7 +103,7 @@ async function get_data() {
 
 
 function change_values(temperature, humidity, weight, energy, time) {
-    console.log(temperature, humidity, weight, energy);
+    //console.log(temperature, humidity, weight, energy);
 
     tempProgress.style = 'width:' + String(temperature) + '%;';
     document.getElementById('tempProgress').innerHTML = temperature;
