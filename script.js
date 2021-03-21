@@ -104,7 +104,7 @@ async function get_data() {
 
 function change_values(temperature, humidity, weight, energy, time) {
     //console.log(temperature, humidity, weight, energy);
-
+    
     tempProgress.style = 'width:' + String(temperature) + '%;';
     document.getElementById('tempProgress').innerHTML = temperature;
 
