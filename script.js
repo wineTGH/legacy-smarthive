@@ -64,6 +64,10 @@ let humChart = new Chart(hum, hum_config);
 
 setInterval(get_data, 1000);
 
+if (Cookies.get('humidity_chart_data') && Cookies.get('temperature_chart_data')) {
+    update_chart('0:00', true);
+}
+
 // возвращает все GET параметры ввиде массива
 function get_param() {
     var a = window.location.search;
@@ -97,6 +101,7 @@ async function get_data() {
     
     if (content.status == 0) {
         change_values(content['temp' + active], content['hum' + active], content['weight' + active], content['energy' + active], content['time']);
+        update_chart(content['time']);
     }
     
  }
@@ -104,7 +109,7 @@ async function get_data() {
 
 function change_values(temperature, humidity, weight, energy, time) {
     //console.log(temperature, humidity, weight, energy);
-
+    
     tempProgress.style = 'width:' + String(temperature) + '%;';
     document.getElementById('tempProgress').innerHTML = temperature;
 
@@ -116,23 +121,77 @@ function change_values(temperature, humidity, weight, energy, time) {
 
     energyProgress.style = 'width:' + String(energy) + '%;';
     document.getElementById('energyProgress').innerHTML = energy;
-
-    if (time != old_time) {
-        hum_config.data.labels.push(time);
-        hum_config.data.datasets.forEach(function(dataset) { dataset.data.push(humidity); });
-        humChart.update();
-
-        temp_config.data.labels.push(time);
-        temp_config.data.datasets.forEach(function(dataset) { dataset.data.push(temperature); });
-        tempChart.update();
-
-        old_time = time;
-    }
+    
+    update_cookies(temperature, humidity, time);
 }
 
 function log_out() {
     let con = confirm('Вы уверенны, что хотите выйти?');
     if (con) {
         window.location.href = '/auth/logout.php';
+    }
+}
+
+function update_chart(time = '0:00', loading = false) { //TODO: Закементированть эту функцию
+    let hum_cookie_data = JSON.parse(Cookies.get('humidity_chart_data'));
+    let temp_cookie_data = JSON.parse(Cookies.get('temperature_chart_data'));
+
+    if (loading) {
+        hum_config.data.labels.push(hum_cookie_data['labels']);
+        hum_config.data.datasets.forEach(function(dataset) { dataset.data.push(hum_cookie_data['data']); });
+        humChart.update();
+
+        temp_config.data.labels.push(temp_cookie_data['time']);
+        temp_config.data.datasets.forEach(function(dataset) { dataset.data.push(temp_cookie_data['data']); });
+        tempChart.update();
+    } else {
+
+    if (time != old_time) {
+        hum_config.data.labels.push(hum_cookie_data['labels'][hum_cookie_data['labels'].length - 1]);
+        hum_config.data.datasets.forEach(function(dataset) { dataset.data.push(hum_cookie_data['data'][hum_cookie_data['data'].length - 1]); });
+        humChart.update();
+
+        temp_config.data.labels.push(temp_cookie_data['labels'][temp_cookie_data['labels'].length - 1]);
+        temp_config.data.datasets.forEach(function(dataset) { dataset.data.push(temp_cookie_data['data'][temp_cookie_data['data'].length - 1]); });
+        tempChart.update();
+
+        old_time = time;
+    }
+}
+}
+
+function update_cookies(temperature, humidity, time) {
+    let hum_cookie_data  = 0;
+    let temp_cookie_data = 0;
+    if (time != old_time) {
+        if (Cookies.get('humidity_chart_data') && Cookies.get('temperature_chart_data')) {
+
+            hum_cookie_data  = JSON.parse(Cookies.get('humidity_chart_data'));
+            temp_cookie_data = JSON.parse(Cookies.get('temperature_chart_data'));
+            
+            temp_cookie_data['labels'].push(time);
+            hum_cookie_data['labels'].push(time);
+    
+            temp_cookie_data['data'].push(temperature);
+            hum_cookie_data['data'].push(humidity);
+
+            Cookies.set('humidity_chart_data', JSON.stringify(hum_cookie_data));
+            Cookies.set('temperature_chart_data', JSON.stringify(temp_cookie_data));
+    
+        } else {
+    
+            hum_cookie_data = {
+                labels: [time],
+                data: [humidity]
+            };
+    
+            temp_cookie_data = {
+                labels:[time],
+                data: [temperature]
+            }
+    
+            Cookies.set('humidity_chart_data', JSON.stringify(hum_cookie_data));
+            Cookies.set('temperature_chart_data', JSON.stringify(temp_cookie_data));
+        }
     }
 }
