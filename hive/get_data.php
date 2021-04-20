@@ -27,7 +27,7 @@
         $arr = array(
             "status" => "0",
         );
-        $active = (int)$data['active'];
+        $active      = (int) $data['active'];
         $arr['time'] = $hive['time'];
         
         if ($active == 0) {

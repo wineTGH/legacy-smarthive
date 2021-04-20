@@ -1,16 +1,12 @@
 <?php
-
     define('ROOT', str_replace('\\', '/', $_SERVER['DOCUMENT_ROOT']) .'/');
-
     include ROOT.'/libs/db.php';
 
-    $user = $_SESSION['logged_user'];
-    $hive_count = (int)$user["hivecount"];
-    $data = $_GET;
-    $i = 1;
-    $active = 0;
-
-    // echo var_dump($user);
+    $user       = $_SESSION['logged_user'];
+    $hive_count = (int) $user["hivecount"];
+    $data       = $_GET;
+    $i          = 1;
+    $active     = 0;
 
     if (isset($data["active"])) {
         $active = (int) $data["active"];
@@ -154,11 +150,11 @@
 
     <?php else:?> <!-- Если пользователь не зарегестрирован, то показываем форму входа-->
         <title>Добро пожаловать!</title>
-    </head>
-    <body>
-        <a href="auth/login.php">Вход</a><br>
-        <a href="auth/reg.php">Регистрация</a>
-    </body>
+        </head>
+        <body>
+            <a href="auth/login.php">Вход</a><br>
+            <a href="auth/reg.php">Регистрация</a>
+        </body>
 
 </html>
 <?php endif;?>
