@@ -1,4 +1,5 @@
 let ADDRES = 'hive/get_data.php';
+
 const tempProgress = document.querySelector('#tempProgress');
 const humProgress = document.querySelector('#humProgress');
 const weightProgress = document.querySelector('#weightProgress');
@@ -64,10 +65,6 @@ let humChart = new Chart(hum, hum_config);
 
 setInterval(get_data, 1000);
 
-if (Cookies.get('humidity_chart_data') && Cookies.get('temperature_chart_data')) {
-    update_chart('0:00', true);
-}
-
 // возвращает все GET параметры ввиде массива
 function get_param() {
     var a = window.location.search;
@@ -108,8 +105,6 @@ async function get_data() {
 
 
 function change_values(temperature, humidity, weight, energy, time) {
-    //console.log(temperature, humidity, weight, energy);
-    
     tempProgress.style = 'width:' + String(temperature) + '%;';
     document.getElementById('tempProgress').innerHTML = temperature;
 
@@ -121,8 +116,6 @@ function change_values(temperature, humidity, weight, energy, time) {
 
     energyProgress.style = 'width:' + String(energy) + '%;';
     document.getElementById('energyProgress').innerHTML = energy;
-    
-    update_cookies(temperature, humidity, time);
 }
 
 function log_out() {
@@ -132,20 +125,7 @@ function log_out() {
     }
 }
 
-function update_chart(time = '0:00', loading = false) { //TODO: Закементированть эту функцию
-    let hum_cookie_data = JSON.parse(Cookies.get('humidity_chart_data'));
-    let temp_cookie_data = JSON.parse(Cookies.get('temperature_chart_data'));
-
-    if (loading) {
-        hum_config.data.labels.push(hum_cookie_data['labels']);
-        hum_config.data.datasets.forEach(function(dataset) { dataset.data.push(hum_cookie_data['data']); });
-        humChart.update();
-
-        temp_config.data.labels.push(temp_cookie_data['time']);
-        temp_config.data.datasets.forEach(function(dataset) { dataset.data.push(temp_cookie_data['data']); });
-        tempChart.update();
-    } else {
-
+function update_chart(time = '0:00') { //TODO: Закементированть эту функцию
     if (time != old_time) {
         hum_config.data.labels.push(hum_cookie_data['labels'][hum_cookie_data['labels'].length - 1]);
         hum_config.data.datasets.forEach(function(dataset) { dataset.data.push(hum_cookie_data['data'][hum_cookie_data['data'].length - 1]); });
@@ -156,42 +136,5 @@ function update_chart(time = '0:00', loading = false) { //TODO: Закемент
         tempChart.update();
 
         old_time = time;
-    }
-}
-}
-
-function update_cookies(temperature, humidity, time) {
-    let hum_cookie_data  = 0;
-    let temp_cookie_data = 0;
-    if (time != old_time) {
-        if (Cookies.get('humidity_chart_data') && Cookies.get('temperature_chart_data')) {
-
-            hum_cookie_data  = JSON.parse(Cookies.get('humidity_chart_data'));
-            temp_cookie_data = JSON.parse(Cookies.get('temperature_chart_data'));
-            
-            temp_cookie_data['labels'].push(time);
-            hum_cookie_data['labels'].push(time);
-    
-            temp_cookie_data['data'].push(temperature);
-            hum_cookie_data['data'].push(humidity);
-
-            Cookies.set('humidity_chart_data', JSON.stringify(hum_cookie_data));
-            Cookies.set('temperature_chart_data', JSON.stringify(temp_cookie_data));
-    
-        } else {
-    
-            hum_cookie_data = {
-                labels: [time],
-                data: [humidity]
-            };
-    
-            temp_cookie_data = {
-                labels:[time],
-                data: [temperature]
-            }
-    
-            Cookies.set('humidity_chart_data', JSON.stringify(hum_cookie_data));
-            Cookies.set('temperature_chart_data', JSON.stringify(temp_cookie_data));
-        }
     }
 }
