@@ -127,12 +127,12 @@ function log_out() {
 
 function update_chart(time = '0:00') { //TODO: Закементированть эту функцию
     if (time != old_time) {
-        hum_config.data.labels.push(hum_cookie_data['labels'][hum_cookie_data['labels'].length - 1]);
-        hum_config.data.datasets.forEach(function(dataset) { dataset.data.push(hum_cookie_data['data'][hum_cookie_data['data'].length - 1]); });
+        hum_config.data.labels.push(time);
+        hum_config.data.datasets.forEach(function(dataset) { dataset.data.push(humidity); });
         humChart.update();
 
-        temp_config.data.labels.push(temp_cookie_data['labels'][temp_cookie_data['labels'].length - 1]);
-        temp_config.data.datasets.forEach(function(dataset) { dataset.data.push(temp_cookie_data['data'][temp_cookie_data['data'].length - 1]); });
+        temp_config.data.labels.push(time);
+        temp_config.data.datasets.forEach(function(dataset) { dataset.data.push(temperature); });
         tempChart.update();
 
         old_time = time;
